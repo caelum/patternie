@@ -1,0 +1,24 @@
+1. @pattern = fields
+	==> save in a hash per size (arity)
+
+2. remove:	
+    fields.each do |f|
+      self.send :attr_accessor, f
+    end
+
+3.   def [](*args) # todo: change to ()
+[]?
+
+4. move from Object to something else
+class Object
+  include Patternie
+  def match(&lambda)
+    MatchBlock.new(self).instance_eval(&lambda)
+  end
+end
+
+5. Option.getOrElse lambda
+
+6. probably more difficult: remove all kind_of and type[] to simple []
+
+7. support either

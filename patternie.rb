@@ -58,25 +58,25 @@ class None < Option
 end
 
 class PatternieMatcher
-  def initialize(left, pattern, type)
-    if left.size != pattern.size
+  def initialize(left, fields, type)
+    if left.size != fields.size
       raise "Cannot match due to partial matching (#{left} #{pattern})" 
     end
     @left = left
-    @pattern = pattern
+    @pattern = fields
     @type = type
   end
   
-  def =~(right)
-    if !right.kind_of? @type
-      raise "Cannot match a #{right} because it is not a #{@type}" 
+  def =~(value)
+    if !value.kind_of? @type
+      raise "Cannot match a #{value} because it is not a #{@type}" 
     end
     
     object = Hashie::Mash.new
     (0..@pattern.size-1).each do |i|
       field = "@#{@pattern[i].to_s}".to_sym
       to_match = @left[i]
-      apply_to(to_match, object, right, field)
+      apply_to(to_match, object, value, field)
     end
     # puts "returning #{object}"
     object
@@ -105,6 +105,7 @@ class PatternieMatcher
   end
 end
 
+# nasttyyyyyy, make it optional?
 class Object
   def method_missing(name)
     if(name.to_s[0]=='_')
