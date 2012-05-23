@@ -94,7 +94,7 @@ class PatternieMatcher
       if !value.kind_of?(to_match)
         raise "Cannot match #{value} to class type #{to_match}"
       end
-    elsif to_match.kind_of?(Matcher)
+    elsif to_match.kind_of?(PatternieMatcher)
       extra = to_match =~ value
       object.merge! extra
     else
